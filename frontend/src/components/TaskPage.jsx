@@ -1,56 +1,50 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
+import { initialState, postReducer } from '../reducers/postReducer';
+import axios from 'axios';
 import TaskList from './TaskList';
 
-const TASK_STATUSES = ['Unstarted', 'In Progress', 'Completed']
+const TaskPage = ({setToggleTheme}) => {
+  const [state, dispatch] = useReducer(postReducer, initialState);
 
-const TaskPage = (props) => {
-  const [toggleNewCardForm, setToggleNewCardForm] = useState(false)
   const [newCardForm, setNewCardForm] = useState(
-    {title: '', description: '',}
+    {title: '', description: '', status: "Pending"}
   );
-
-  function onCreateTask(e) {
-    e.preventDefault()
-    props.onCreateTask({
-      title: newCardForm.title,
-      description: newCardForm.description,
-    })
-    resetForm()
-  }
-
-  function resetForm() {
-    setNewCardForm({title: '', description: ''});
-    setToggleNewCardForm(false)
-  }
 
   function onInputChange(e) {
     setNewCardForm({...newCardForm, [e.target.name]: e.target.value})
-  }
+  };
 
-  function renderTaskLists() {
-    const { tasks } = props
-    return TASK_STATUSES.map(status => {
-      const statusTasks = tasks.filter(task => task.status === status)
-      return (
-        <TaskList key={status} status={status} tasks={statusTasks} onStatusChange={props.onStatusChange}/>
-      )
-    })
-  }
+  const handlePostTask = async (e) => {
+    e.preventDefault()
+    try {
+      await axios.post(process.env.REACT_APP_API_URL, newCardForm)
+      dispatch({type: "POST_TASK_SUCCESSFUL", payload: newCardForm})
+      setNewCardForm({title: '', description: ''})
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
   return (
-    <div className="task-list">
-      <div className='toggle-btn-container'>
-        <button className="toggle-btn toggle-btn-default" onClick={()=>setToggleNewCardForm(prev=>!prev)}>+ New task</button>
+    <section className="task-list">
+      <div className='page-header'>
+        <h1>Taskgenics</h1>
+        <button className="toggle-btn toggle-btn-default" onClick={setToggleTheme()}>Theme</button>
       </div>
-      {toggleNewCardForm && (
-        <form className="task-list-form" onSubmit={onCreateTask}>
-          <input type="text" name='title' value={newCardForm.title} onChange={onInputChange} minLength="5" maxLength="50"placeholder="title" required/>
-          <input type="text" name='description' value={newCardForm.description} onChange={onInputChange} minLength="50" maxLength="150" placeholder="description" required/>
-          <button type="submit" disabled={newCardForm.title === "" || newCardForm.description === ""}>Save</button>
-        </form>
-      )}
-      <div className="task-lists">{renderTaskLists()}</div>
-    </div>
+
+      <form className="task-list-form" onSubmit={handlePostTask}>
+        <input type="text" name='title' value={newCardForm.title} onChange={onInputChange} minLength="5" maxLength="50"placeholder="title" required/>
+        <input type="text" name='description' value={newCardForm.description} onChange={onInputChange} placeholder="description" required/>
+        <select name="status" id="status" onChange={onInputChange}>
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+        <button type="submit" disabled={newCardForm.title === "" || newCardForm.description === ""}>Save</button>
+      </form>
+
+      <TaskList/>
+    </section>
   )
 }
 

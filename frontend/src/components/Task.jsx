@@ -1,4 +1,4 @@
-const TASK_STATUSES = ['Unstarted', 'In Progress', 'Completed']
+const TASK_STATUSES = ['Pending', 'In Progress', 'Completed']
 
 const Task = props => {
   return (

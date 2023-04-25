@@ -4,11 +4,56 @@
     box-sizing: border-box;
     scroll-behavior: smooth;
     line-height: 1.5;
+    font-size: 14px;
+    font-weight: 300;
 }
 
 body {
     background: hsl(0, 0%, 93%);
-    padding: 28px 16px;
+}
+
+h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: hsl(0, 0%, 93%);
+    font-family: 'Courier New', Courier, monospace;
+    @media (min-width: 768px) {
+        font-size: 34px;
+    }
+}
+
+.hero-bg-light {
+    background: url(./assets/bg-mobile-light.jpg) no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 40vh;
+    z-index: -3;
+    @media (min-width: 768px) {
+        background: url(./assets/bg-desktop-light.jpg) no-repeat;
+    }
+}
+
+.hero-bg-dark {
+    background: url(./assets/bg-mobile-dark.jpg) no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 40vh;
+    z-index: -3;
+    @media (min-width: 768px) {
+        background: url(./assets/bg-desktop-dark.jpg) no-repeat;
+    }
+}
+
+.page-content {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    left: 0;
+    padding: 0 20px;
+    @media (min-width: 768px) {
+        top: 80px;
+        padding: 0 100px;
+    }
 }
 
 .task {
@@ -43,9 +88,9 @@ body {
 }
 
 .task-list {
-    .toggle-btn-container {
+    .page-header {
         display: flex;
-        justify-content: right;
+        justify-content: space-between;
         .toggle-btn {
             background: white;
             padding: 8px 12px;
@@ -62,7 +107,7 @@ body {
         display: flex;
         flex-flow: column;
         gap: 12px;
-        input {
+        input, select {
             border: none;
             outline: none;
             border-radius: 8px;
@@ -80,12 +125,12 @@ body {
             padding: 8px 12px;
             border: none;
             border-radius: 8px;
-            background: hsl(235, 77%, 47%);
+            background: hsl(125, 77%, 47%);
             color: #eee;
             margin-top: 12px;
             transition: ease-in-out 300ms;
             &:hover {
-                background: hsl(235, 71%, 54%);
+                background: hsl(127, 71%, 54%);
             }
             &:disabled {
                 background: hsl(0, 0%, 60%);
@@ -104,13 +149,26 @@ body {
     flex-flow: column;
     justify-content: center;
     margin-top: 20px;
+    span {
+        display: inline-block;
+        padding: 8px 12px;
+        margin-top: 12px;
+        border: none;
+        border-radius: 8px;
+        background: hsl(12, 77%, 47%);
+        color: #eee;
+        margin-top: 12px;
+        transition: ease-in-out 300ms;
+        &:hover {
+            background: hsl(13, 71%, 54%);
+        }
+        &:disabled {
+            background: hsl(0, 0%, 60%);
+        }
+    }
 }
 
 @media (min-width: 768px) {
-    body {
-        padding: 28px 80px;
-    }
-    
     .task-lists {
         flex-flow: row;
         justify-content: space-between;

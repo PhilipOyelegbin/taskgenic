@@ -1,27 +1,22 @@
-import { connect } from 'react-redux';
-import { createTask, editTask } from './action';
-import TaskPage from './components/TaskPage'
+import { useState } from 'react';
+import TaskPage from './components/TaskPage';
 import './App.scss';
 
-const App = ({tasks, dispatch}) => {
-  function onCreateTask({title, description}) {
-    dispatch(createTask({title, description}))
-  }
-  function onStatusChange(id, status) {
-    dispatch(editTask(id, {status}))
-  }
+function App() {
+  const [toggleTheme, setToggleTheme] = useState(false);
+
+  const renderTaskPage = () => (
+    <section className='page-content'>
+      <TaskPage setToggleTheme={()=>setToggleTheme(prev=>!prev)}/>
+    </section>
+  )
 
   return (
     <main>
-      <TaskPage tasks={tasks} onCreateTask={onCreateTask} onStatusChange={onStatusChange} />
+      <section className={`${!toggleTheme ? "hero-bg-light" : "hero-bg-dark" }`}></section>
+      {renderTaskPage()}
     </main>
   )
 }
 
-function mapStateToProps(state) {
-  return {
-    tasks: state.tasks
-  }
-}
-
-export default connect(mapStateToProps)(App)
+export default App
