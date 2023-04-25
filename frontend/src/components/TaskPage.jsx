@@ -3,7 +3,7 @@ import { initialState, postReducer } from '../reducers/postReducer';
 import axios from 'axios';
 import TaskList from './TaskList';
 
-const TaskPage = ({setToggleTheme}) => {
+const TaskPage = (handleThemeToggle) => {
   const [dispatch] = useReducer(postReducer, initialState);
 
   const [newCardForm, setNewCardForm] = useState(
@@ -29,7 +29,7 @@ const TaskPage = ({setToggleTheme}) => {
     <section className="task-list">
       <div className='page-header'>
         <h1>Taskgenics</h1>
-        <button className="toggle-btn toggle-btn-default" onClick={setToggleTheme()}>Theme</button>
+        <button className="toggle-btn toggle-btn-default" onClick={handleThemeToggle}>Theme</button>
       </div>
 
       <form className="task-list-form" onSubmit={handlePostTask}>
