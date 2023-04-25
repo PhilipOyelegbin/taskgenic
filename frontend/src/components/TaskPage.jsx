@@ -4,7 +4,7 @@ import axios from 'axios';
 import TaskList from './TaskList';
 
 const TaskPage = ({setToggleTheme}) => {
-  const [state, dispatch] = useReducer(postReducer, initialState);
+  const [dispatch] = useReducer(postReducer, initialState);
 
   const [newCardForm, setNewCardForm] = useState(
     {title: '', description: '', status: "Pending"}
@@ -17,8 +17,8 @@ const TaskPage = ({setToggleTheme}) => {
   const handlePostTask = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(process.env.REACT_APP_API_URL, newCardForm)
-      dispatch({type: "POST_TASK_SUCCESSFUL", payload: newCardForm})
+      const resp = await axios.post(process.env.REACT_APP_API_URL, newCardForm)
+      dispatch({type: "POST_TASK_SUCCESSFUL", payload: resp.data})
       setNewCardForm({title: '', description: ''})
     } catch (error) {
       console.log(error)
