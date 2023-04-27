@@ -60,7 +60,7 @@ const TaskList = () => {
             </div>
             <hr />
             <p>{task.description}</p>
-            <span onClick={() => handleDeleteTask(task._id)} className="btn">Delete</span>
+            <button onClick={() => handleDeleteTask(task._id)} className="btn">Delete</button>
           </div>
         ))}
       </div>
