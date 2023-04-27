@@ -1,10 +1,13 @@
-import { useReducer, useState } from 'react';
-import { initialState, postReducer } from '../reducers/postReducer';
+import { Suspense, lazy, useReducer, useState } from 'react';
+import { initialState, taskReducer } from "../reducers/taskReducer";
 import axios from 'axios';
-import TaskList from './TaskList';
+import sun from '../assets/icon-sun.svg'
+import moon from '../assets/icon-moon.svg'
 
-const TaskPage = (handleThemeToggle) => {
-  const [dispatch] = useReducer(postReducer, initialState);
+const TaskList = lazy(() => import('./TaskList'));
+
+const TaskPage = ({handleThemeToggle, theme}) => {
+  const [, dispatch] = useReducer(taskReducer, initialState);
 
   const [newCardForm, setNewCardForm] = useState(
     {title: '', description: '', status: "Pending"}
@@ -17,9 +20,11 @@ const TaskPage = (handleThemeToggle) => {
   const handlePostTask = async (e) => {
     e.preventDefault()
     try {
-      const resp = await axios.post(process.env.REACT_APP_API_URL, newCardForm)
-      dispatch({type: "POST_TASK_SUCCESSFUL", payload: resp.data})
+      let resp = await axios.post(process.env.REACT_APP_API_URL, newCardForm)
+      dispatch({type: "POST_TASK", payload: resp.data})
       setNewCardForm({title: '', description: ''})
+      resp = await axios.get(process.env.REACT_APP_API_URL)
+      dispatch({type: "GET_TASK", payload: resp.data})
     } catch (error) {
       console.log(error)
     }
@@ -29,7 +34,7 @@ const TaskPage = (handleThemeToggle) => {
     <section className="task-list">
       <div className='page-header'>
         <h1>Taskgenics</h1>
-        <button className="toggle-btn toggle-btn-default" onClick={handleThemeToggle}>Theme</button>
+        <img src={!theme ? sun : moon} className="toggle-btn toggle-btn-default" onClick={() => handleThemeToggle()} alt="theme icon" />
       </div>
 
       <form className="task-list-form" onSubmit={handlePostTask}>
@@ -43,7 +48,9 @@ const TaskPage = (handleThemeToggle) => {
         <button type="submit" disabled={newCardForm.title === "" || newCardForm.description === ""}>Save</button>
       </form>
 
-      <TaskList/>
+      <Suspense fallback={<h3 className='loading'>Loading task...</h3>}>
+        <TaskList/>
+      </Suspense>
     </section>
   )
 }

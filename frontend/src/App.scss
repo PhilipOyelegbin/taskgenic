@@ -8,8 +8,9 @@
     font-weight: 300;
 }
 
-body {
-    background: hsl(0, 0%, 93%);
+.dark-theme {
+    background: hsl(0, 0%, 27%);
+    color: hsl(0, 0%, 93%);
 }
 
 h1 {
@@ -50,14 +51,19 @@ h1 {
     right: 0;
     left: 0;
     padding: 0 20px;
+    background: inherit;
     @media (min-width: 768px) {
         top: 80px;
         padding: 0 100px;
     }
 }
 
+.loading {
+    text-align: center;
+    font-size: 24px;
+}
+
 .task {
-    background: white;
     box-shadow: 2px 2px 25px gray;
     border-radius: 8px;
     padding: 12px;
@@ -92,10 +98,8 @@ h1 {
         display: flex;
         justify-content: space-between;
         .toggle-btn {
-            background: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 8px;
+            width: 32px;
+            height: 32px;
             transition: ease-in-out 300ms;
             &:hover {
                 box-shadow: 2px 2px 16px hsl(0, 0%, 60%);

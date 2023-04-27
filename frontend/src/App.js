@@ -8,21 +8,23 @@ function App() {
 
   const handleThemeToggle = () => {
     if(state === true) {
-      dispatch({type: "LIGHT", payload: (prev=>!prev)})
+      dispatch({type: "LIGHT", payload: false})
     } else {
-      dispatch({type: "DARK", payload: (prev=>!prev)})
+      dispatch({type: "DARK", payload: true})
     }
   }
 
+  !state ? document.getElementById("theme").classList.add("dark-theme") : document.getElementById("theme").classList.remove("dark-theme");
+
   const renderTaskPage = () => (
     <section className='page-content'>
-      <TaskPage handleThemeToggle={handleThemeToggle}/>
+      <TaskPage theme={state} handleThemeToggle={handleThemeToggle}/>
     </section>
   )
 
   return (
     <main>
-      <section className={`${!state ? "hero-bg-light" : "hero-bg-dark" }`}></section>
+      <section className={`${state ? "hero-bg-light" : "hero-bg-dark" }`}></section>
       {renderTaskPage()}
     </main>
   )
