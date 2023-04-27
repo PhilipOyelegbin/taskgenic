@@ -24,7 +24,7 @@ const TaskList = () => {
 
   const handleUpdateTask = async (_id) => {
     try {
-      const resp = await axios.patch(`https://taskgenic-api.vercel.app/todos/${_id}`, newStatus)
+      const resp = await axios.patch(`${process.env.REACT_APP_API_URL+"/"+_id}`, newStatus)
       console.log(resp.data);
       dispatch({type: "UPDATE_TASK", payload: resp.data})
       handleGetTask()
@@ -35,7 +35,7 @@ const TaskList = () => {
 
   const handleDeleteTask = async (_id) => {
     try {
-      const resp = await axios.delete(`https://taskgenic-api.vercel.app/todos/${_id}`)
+      const resp = await axios.delete(`${process.env.REACT_APP_API_URL+"/"+_id}`)
       dispatch({type: "DELETE_TASK", payload: resp.data})
       handleGetTask()
     } catch (error) {
