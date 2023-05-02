@@ -1,6 +1,6 @@
 {
-  "short_name": "Taskgenics",
-  "name": "A todo app",
+  "short_name": "TaskMan",
+  "name": "TaskMan",
   "icons": [
     {
       "src": "favicon-32x32.png",

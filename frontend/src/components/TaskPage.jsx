@@ -33,7 +33,7 @@ const TaskPage = ({handleThemeToggle, theme}) => {
   return (
     <section className="task-list">
       <div className='page-header'>
-        <h1>Taskgenics</h1>
+        <h1>TaskMan</h1>
         <img src={!theme ? sun : moon} className="toggle-btn toggle-btn-default" onClick={() => handleThemeToggle()} alt="theme icon" />
       </div>
 
