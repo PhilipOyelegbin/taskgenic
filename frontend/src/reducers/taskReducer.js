@@ -7,8 +7,7 @@ function taskReducer(state, action) {
         case "POST_TASK":
             return action.payload;
         case "UPDATE_TASK":
-            console.log(action.payload)
-            return state?.filter(data => data._id !== action.payload);
+            return action.payload;
         case "DELETE_TASK":
             return state?.filter(data => data._id !== action.payload);
         default:

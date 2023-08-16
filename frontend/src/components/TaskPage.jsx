@@ -1,4 +1,4 @@
-import { Suspense, lazy, useReducer, useState } from 'react';
+import { Suspense, lazy, useEffect, useReducer, useState } from 'react';
 import { initialState, taskReducer } from "../reducers/taskReducer";
 import axios from 'axios';
 import sun from '../assets/icon-sun.svg'
@@ -7,7 +7,7 @@ import moon from '../assets/icon-moon.svg'
 const TaskList = lazy(() => import('./TaskList'));
 
 const TaskPage = ({handleThemeToggle, theme}) => {
-  const [, dispatch] = useReducer(taskReducer, initialState);
+  const [state, dispatch] = useReducer(taskReducer, initialState);
 
   const [newCardForm, setNewCardForm] = useState(
     {title: '', description: '', status: "Pending"}
@@ -16,6 +16,15 @@ const TaskPage = ({handleThemeToggle, theme}) => {
   function onInputChange(e) {
     setNewCardForm({...newCardForm, [e.target.name]: e.target.value})
   };
+
+  const handleGetTask = async() => {
+    try {
+      const resp = await axios.get(process.env.REACT_APP_API_URL)
+      dispatch({type: "GET_TASK", payload: resp.data})
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const handlePostTask = async (e) => {
     e.preventDefault()
@@ -29,6 +38,10 @@ const TaskPage = ({handleThemeToggle, theme}) => {
       console.log(error)
     }
   };
+
+  useEffect(() => {
+    handleGetTask();
+  }, [])
 
   return (
     <section className="task-list">
@@ -49,7 +62,7 @@ const TaskPage = ({handleThemeToggle, theme}) => {
       </form>
 
       <Suspense fallback={<h3 className='loading'>Loading task...</h3>}>
-        <TaskList/>
+        <TaskList handleGetTask={() => handleGetTask()} state={state}/>
       </Suspense>
     </section>
   )
