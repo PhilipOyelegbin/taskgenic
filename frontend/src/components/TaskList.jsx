@@ -15,7 +15,6 @@ const TaskList = ({handleGetTask, state}) => {
     setNewStatus({[e.target.name]: e.target.value})
     setHasChanged(true)
   }
-  console.log(state)
 
   const handleDeleteTask = async(_id) => {
     try {
