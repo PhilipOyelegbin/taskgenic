@@ -63,36 +63,6 @@ h1 {
     font-size: 24px;
 }
 
-.task {
-    box-shadow: 2px 2px 25px gray;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 20px;
-    height: fit-content;
-    width: 280px;
-    div {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 8px;
-        select {
-            background: hsl(235, 71%, 54%);
-            color: hsl(0, 0%, 100%);
-            border: none;
-            border-radius: 4px;
-            outline: none;
-            padding: 4px 8px;
-            &:hover {
-                background: hsl(235, 77%, 47%);
-            }
-        }
-    }
-    p {
-        margin-top: 8px;
-        word-wrap: break-word;
-    }
-}
-
 .task-list {
     .page-header {
         display: flex;
@@ -148,11 +118,41 @@ h1 {
     }
 }
 
-.task-lists {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    margin-top: 20px;
+.task-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-rows: auto;
+    gap: 10px;
+}
+
+.task {
+    box-shadow: 2px 2px 25px gray;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 20px;
+    height: fit-content;
+    width: 280px;
+    div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        select {
+            background: hsl(235, 71%, 54%);
+            color: hsl(0, 0%, 100%);
+            border: none;
+            border-radius: 4px;
+            outline: none;
+            padding: 4px 8px;
+            &:hover {
+                background: hsl(235, 77%, 47%);
+            }
+        }
+    }
+    p {
+        margin-top: 8px;
+        word-wrap: break-word;
+    }
     button {
         display: inline-block;
         padding: 8px 12px;
@@ -169,12 +169,5 @@ h1 {
         &:disabled {
             background: hsl(0, 0%, 60%);
         }
-    }
-}
-
-@media (min-width: 768px) {
-    .task-lists {
-        flex-flow: row;
-        justify-content: space-between;
     }
 }

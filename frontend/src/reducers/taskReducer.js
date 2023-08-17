@@ -9,7 +9,7 @@ function taskReducer(state, action) {
         case "UPDATE_TASK":
             return action.payload;
         case "DELETE_TASK":
-            return state?.filter(data => data._id !== action.payload);
+            return action.payload;
         default:
             return state
     }

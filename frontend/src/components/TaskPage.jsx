@@ -1,6 +1,7 @@
-import { Suspense, lazy, useEffect, useReducer, useState } from 'react';
-import { initialState, taskReducer } from "../reducers/taskReducer";
+import { Suspense, lazy, useReducer, useState } from 'react';
+import { toast } from 'react-toastify';
 import axios from 'axios';
+import { initialState, taskReducer } from "../reducers/taskReducer";
 import sun from '../assets/icon-sun.svg'
 import moon from '../assets/icon-moon.svg'
 
@@ -22,7 +23,7 @@ const TaskPage = ({handleThemeToggle, theme}) => {
       const resp = await axios.get(process.env.REACT_APP_API_URL)
       dispatch({type: "GET_TASK", payload: resp.data})
     } catch (error) {
-      console.log(error)
+      error && toast.error("Unable to get all task")
     }
   }
 
@@ -32,16 +33,12 @@ const TaskPage = ({handleThemeToggle, theme}) => {
       let resp = await axios.post(process.env.REACT_APP_API_URL, newCardForm)
       dispatch({type: "POST_TASK", payload: resp.data})
       setNewCardForm({title: '', description: ''})
-      resp = await axios.get(process.env.REACT_APP_API_URL)
-      dispatch({type: "GET_TASK", payload: resp.data})
+      handleGetTask()
+      toast.success("New task created successfully")
     } catch (error) {
-      console.log(error)
+      error && toast.error("Unable to create new task")
     }
   };
-
-  useEffect(() => {
-    handleGetTask();
-  }, [])
 
   return (
     <section className="task-list">
