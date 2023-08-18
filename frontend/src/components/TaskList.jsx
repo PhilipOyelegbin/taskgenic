@@ -40,7 +40,8 @@ const TaskList = ({handleGetTask, state}) => {
     }
     handleGetTask()
     setHasChanged(false)
-  }, [hasChanged, newStatus, statusId, handleGetTask])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasChanged, newStatus, statusId])
 
   return (
     <article className="task-container">
