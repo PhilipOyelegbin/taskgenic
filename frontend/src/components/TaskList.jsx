@@ -40,7 +40,7 @@ const TaskList = ({handleGetTask, state}) => {
     }
     handleGetTask()
     setHasChanged(false)
-  }, [hasChanged, newStatus])
+  }, [hasChanged, newStatus, statusId, handleGetTask])
 
   return (
     <article className="task-container">
